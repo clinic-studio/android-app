@@ -1,8 +1,8 @@
 package es.clinicstudio.app.ui.activity
 
-import android.support.v7.app.AppCompatActivity
-
 /**
+ * Splash screen [android.app.Activity].
+ *
  * @author vh @ recursividad.es
  */
-class SplashActivity : AppCompatActivity()
+class SplashActivity: BaseActivity()
