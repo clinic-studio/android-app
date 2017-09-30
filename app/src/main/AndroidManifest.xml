@@ -2,7 +2,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
 
-    package="es.clinicstudio.app">
+    package="es.clinicstudio.app"
+    >
+
+    <!--  ##  PERMISSIONS  ## -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:name=".App"

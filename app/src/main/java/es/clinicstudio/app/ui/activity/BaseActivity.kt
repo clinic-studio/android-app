@@ -21,7 +21,7 @@ open class BaseActivity: AppCompatActivity() {
     @Inject lateinit var context: Context
     @Inject lateinit var navigator: Navigator
 
-    private lateinit var activityComponent: ActivityComponent
+    lateinit var activityComponent: ActivityComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
