@@ -7,7 +7,7 @@ import es.clinicstudio.app.ui.view.View
  *
  * @author vh @ recursividad.es
  */
-abstract class Presenter<V: View> {
+abstract class Presenter<in V: View> {
 
     /**
      * Set the view that will display the data.
