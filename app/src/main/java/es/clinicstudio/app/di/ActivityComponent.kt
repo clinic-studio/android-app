@@ -3,6 +3,7 @@ package es.clinicstudio.app.di
 import dagger.Component
 import es.clinicstudio.app.di.module.ActivityModule
 import es.clinicstudio.app.ui.activity.BaseActivity
+import es.clinicstudio.app.ui.activity.PostListActivity
 
 /**
  * [Component] that provides those dependencies that are instantiate in
@@ -20,5 +21,6 @@ interface ActivityComponent {
     // INJECTORS
     //      Activity injectors
     fun inject(activity: BaseActivity)
+    fun inject(activity: PostListActivity)
 }
 
