@@ -43,6 +43,9 @@ dependencies {
     // Dagger
     implementation 'com.google.dagger:dagger:2.11'
 
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+
 
     // Android test dependencies
     // Espresso
