@@ -7,17 +7,22 @@ android {
     buildToolsVersion "26.0.1"
 
     defaultConfig {
-        applicationId "es.clinicstudio.app"
         minSdkVersion 16
         targetSdkVersion 26
+
+        applicationId "es.clinicstudio.app"
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // Build configuration
+        buildConfigField 'String', 'BASE_URL', '"http://clinicstudio.es/wp-json/wp/v2/"'
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

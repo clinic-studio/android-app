@@ -2,6 +2,7 @@ package es.clinicstudio.app.di
 
 import android.content.Context
 import dagger.Component
+import es.clinicstudio.app.di.module.ApiClientModule
 import es.clinicstudio.app.di.module.ApplicationModule
 import es.clinicstudio.app.ui.utils.Navigator
 import javax.inject.Singleton
@@ -14,7 +15,10 @@ import javax.inject.Singleton
  */
 @Singleton
 @Component(
-        modules = arrayOf(ApplicationModule::class)
+        modules = arrayOf(
+                ApplicationModule::class,
+                ApiClientModule::class
+        )
 )
 interface ApplicationComponent {
 
