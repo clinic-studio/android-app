@@ -1,6 +1,6 @@
 package es.clinicstudio.app.data.api
 
-import es.clinicstudio.app.model.entity.Post
+import es.clinicstudio.app.domain.entity.Post
 import retrofit2.Call
 import retrofit2.http.GET
 

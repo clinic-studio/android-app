@@ -1,4 +1,4 @@
-package es.clinicstudio.app.model.entity
+package es.clinicstudio.app.domain.entity
 
 /**
  * @author vh @ recursividad.es
