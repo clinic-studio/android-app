@@ -1,6 +1,7 @@
 package es.clinicstudio.app.di.module
 
 import android.content.Context
+import android.net.ConnectivityManager
 import dagger.Module
 import dagger.Provides
 import es.clinicstudio.app.App
@@ -24,6 +25,16 @@ class ApplicationModule(private val app: App) {
     @Provides @Singleton
     fun provideApplicationContext(): Context {
         return app.applicationContext
+    }
+
+    /**
+     * Provide the application [ConnectivityManager].
+     *
+     * @return Connectivity manager.
+     */
+    @Provides @Singleton
+    fun provideConnectivityManager(): ConnectivityManager {
+        return app.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
 
     /**
