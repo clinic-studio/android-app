@@ -13,4 +13,25 @@
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
+    <!-- Text styles -->
+    <style name="TextAppearance.Tag" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/roboto_black</item>
+        <item name="android:textSize">@dimen/text_category</item>
+        <item name="android:textColor">@color/material_gray800</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="TextAppearance.Title" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/text_big</item>
+        <item name="android:textColor">@color/material_gray900</item>
+    </style>
+
+    <style name="TextAppearance.Subtitle" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_default</item>
+        <item name="android:textColor">@color/material_gray700</item>
+    </style>
 </resources>

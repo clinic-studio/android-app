@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- MARGINS -->
+    <dimen name="margin_default">16dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_smaller">4dp</dimen>
+
+    <!-- TEXT -->
+    <dimen name="text_default">16dp</dimen>
+    <dimen name="text_small">14dp</dimen>
+    <dimen name="text_smaller">10dp</dimen>
+    <dimen name="text_big">20dp</dimen>
+    <dimen name="text_bigger">24dp</dimen>
+
+    <dimen name="text_category">@dimen/text_smaller</dimen>
+</resources>
