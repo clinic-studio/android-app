@@ -8,6 +8,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import es.clinicstudio.app.R
 import es.clinicstudio.app.domain.entity.Post
+import es.clinicstudio.app.ui.utils.StringUtils
 
 /**
  * @author vh @ recursividad.es
@@ -76,5 +77,8 @@ class PostRowViewHolder(view: View): RowViewHolder<Post>(view) {
         else if (content.embedded.author.size > 1) {
             postAuthorTextView.text = context?.getString(R.string.by_various_authors)
         }
+
+        // Date
+        postPublishDateTextView.text = StringUtils().getDateString(content.date, postPublishDateTextView.context)
     }
 }

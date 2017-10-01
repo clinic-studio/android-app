@@ -3,4 +3,24 @@
 
     <string name="by_author">Por %1$s</string>
     <string name="by_various_authors">Por varios autores</string>
+    
+    <!-- Time related strings -->
+    <string name="just_now">ahora</string>
+    <string name="one_minute_ago">hace un minuto</string>
+    <string name="x_minutes_ago">hace %1$d minutos</string>
+    <string name="one_hour_ago">hace una hora</string>
+    <string name="x_hours_ago">hace %1$d horas</string>
+    <string name="yesterday">ayer</string>
+    <string name="on_date">%1$s</string>
+
+
+    <!-- Plurals -->
+    <plurals name="plurals_x_minutes_ago">
+        <item quantity="one">@string/one_minute_ago</item>
+        <item quantity="other">@string/x_minutes_ago</item>
+    </plurals>
+    <plurals name="plurals_x_hours_ago">
+        <item quantity="one">@string/one_hour_ago</item>
+        <item quantity="other">@string/x_hours_ago</item>
+    </plurals>
 </resources>
