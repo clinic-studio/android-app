@@ -67,6 +67,11 @@ class PostRowViewHolder(view: View): RowViewHolder<Post>(view) {
     override fun setContent(content: Post) {
         this.content = content
 
+        // Category
+        if (content.embedded.terms.isNotEmpty() && content.embedded.terms[0].isNotEmpty()) {
+            postCategoryTextView.text = content.embedded.terms[0][0].name
+        }
+
         // Title
         postTitleTextView.text = content.title.rendered
 
