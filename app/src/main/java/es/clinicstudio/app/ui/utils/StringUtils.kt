@@ -5,10 +5,19 @@ import es.clinicstudio.app.R
 import org.joda.time.*
 
 /**
+ * Useful String functions.
+ *
  * @author vh @ recursividad.es
  */
 class StringUtils {
 
+    /**
+     * Get a text that represents the given date time.
+     *
+     * @param dateTime Date time.
+     * @param context Application context.
+     * @return String with the date formatted.
+     */
     fun getDateString(dateTime: DateTime, context: Context): String {
         val result: String
 
