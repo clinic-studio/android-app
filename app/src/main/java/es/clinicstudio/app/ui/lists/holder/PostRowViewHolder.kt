@@ -66,6 +66,15 @@ class PostRowViewHolder(view: View): RowViewHolder<Post>(view) {
     override fun setContent(content: Post) {
         this.content = content
 
+        // Title
         postTitleTextView.text = content.title.rendered
+
+        // Author
+        if (content.embedded.author.size == 1) {
+            postAuthorTextView.text = context?.getString(R.string.by_author, content.embedded.author[0].name)
+        }
+        else if (content.embedded.author.size > 1) {
+            postAuthorTextView.text = context?.getString(R.string.by_various_authors)
+        }
     }
 }

@@ -9,6 +9,6 @@ import retrofit2.http.GET
  */
 interface PostApiClient {
 
-    @GET("posts")
+    @GET("posts?_embed=true")
     fun getPosts(): Call<List<Post>>
 }
