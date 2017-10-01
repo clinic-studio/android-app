@@ -9,7 +9,7 @@
     >
 
     <ImageView
-        android:id="@+id/post_main_image_view"
+        android:id="@+id/postMainPictureImageView"
 
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -18,27 +18,29 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+
+        android:scaleType="centerCrop"
     />
     
-    <FrameLayout
-        android:id="@+id/post_blur_background_view"
+    <ImageView
+        android:id="@+id/postBlurBackgroundImageView"
         
         android:layout_width="0dp"
         android:layout_height="0dp"
 
-        app:layout_constraintTop_toTopOf="@+id/post_blur_background_placeholder"
+        app:layout_constraintTop_toTopOf="@+id/postBlurBackgroundPlaceholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
     />
 
     <Space
-        android:id="@+id/post_blur_background_placeholder"
+        android:id="@+id/postBlurBackgroundPlaceholder"
 
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        app:layout_constraintBottom_toTopOf="@+id/post_category_text_view"
+        app:layout_constraintBottom_toTopOf="@+id/postCategoryTextView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
 
@@ -46,12 +48,12 @@
     />
 
     <TextView
-        android:id="@+id/post_category_text_view"
+        android:id="@+id/postCategoryTextView"
 
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        app:layout_constraintBottom_toTopOf="@+id/post_title_text_view"
+        app:layout_constraintBottom_toTopOf="@+id/postTitleTextView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
 
@@ -67,12 +69,12 @@
     />
 
     <TextView
-        android:id="@+id/post_title_text_view"
+        android:id="@+id/postTitleTextView"
 
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        app:layout_constraintBottom_toTopOf="@+id/post_author_text_view"
+        app:layout_constraintBottom_toTopOf="@+id/postAuthorTextView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
 
@@ -90,14 +92,14 @@
     />
     
     <TextView
-        android:id="@+id/post_author_text_view"
+        android:id="@+id/postAuthorTextView"
 
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/post_publish_date_text_view"
+        app:layout_constraintRight_toLeftOf="@+id/postPublishDateTextView"
 
         android:layout_marginLeft="@dimen/margin_default"
         android:layout_marginStart="@dimen/margin_default"
@@ -113,13 +115,13 @@
     />
 
     <TextView
-        android:id="@+id/post_publish_date_text_view"
+        android:id="@+id/postPublishDateTextView"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        app:layout_constraintBaseline_toBaselineOf="@+id/post_author_text_view"
-        app:layout_constraintLeft_toRightOf="@+id/post_author_text_view"
+        app:layout_constraintBaseline_toBaselineOf="@+id/postAuthorTextView"
+        app:layout_constraintLeft_toRightOf="@+id/postAuthorTextView"
         app:layout_constraintRight_toRightOf="parent"
 
         android:layout_marginRight="@dimen/margin_default"

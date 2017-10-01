@@ -5,6 +5,7 @@ import dagger.Component
 import es.clinicstudio.app.di.module.ApiClientModule
 import es.clinicstudio.app.di.module.ApplicationModule
 import es.clinicstudio.app.di.module.RepositoryModule
+import es.clinicstudio.app.ui.presenter.PostListPresenter
 import es.clinicstudio.app.ui.utils.Navigator
 import javax.inject.Singleton
 
@@ -28,4 +29,6 @@ interface ApplicationComponent {
     //      Application components
     fun context(): Context
     fun navigator(): Navigator
+
+    fun postListPresenter(): PostListPresenter
 }
