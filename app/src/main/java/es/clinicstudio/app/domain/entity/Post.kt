@@ -34,5 +34,7 @@ data class Post(
         val links: Links,
 
         @SerializedName("_embedded")
-        val embedded: EmbeddedData
+        val embedded: EmbeddedData,
+
+        var media: List<Media>?
 )

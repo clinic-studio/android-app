@@ -30,8 +30,8 @@
     </style>
 
     <style name="TextAppearance.Subtitle" parent="TextAppearance.AppCompat">
-        <item name="android:fontFamily">@font/roboto_regular</item>
-        <item name="android:textSize">@dimen/text_default</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/text_small</item>
         <item name="android:textColor">@color/material_gray700</item>
     </style>
 </resources>

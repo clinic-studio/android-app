@@ -15,5 +15,5 @@ interface PostApiClient {
     fun getPosts(): Call<List<Post>>
 
     @GET("media")
-    fun getMediaForPost(@Query("parent") postId: Int): Call<Media>
+    fun getMediaForPost(@Query("parent") postId: Int): Call<List<Media>>
 }
