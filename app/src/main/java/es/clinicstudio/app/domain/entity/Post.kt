@@ -36,5 +36,6 @@ data class Post(
         @SerializedName("_embedded")
         val embedded: EmbeddedData,
 
-        var media: List<Media>?
+        var media: List<Media>?,
+        var position: Int
 )

@@ -12,7 +12,7 @@ import retrofit2.http.Query
 interface PostApiClient {
 
     @GET("posts?_embed=true")
-    fun getPosts(): Call<List<Post>>
+    fun getPosts(@Query("page") page: Int = 1, @Query("per_page") size: Int = 10): Call<List<Post>>
 
     @GET("media")
     fun getMediaForPost(@Query("parent") postId: Int): Call<List<Media>>

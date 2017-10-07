@@ -22,9 +22,11 @@ class PostRepositoryImpl @Inject constructor(
     /**
      * Get the list of most recent posts.
      *
+     * @param[page] Number of page to retrieve.
+     * @param[size] Number of elements in the result.
      * @return Returns the list of most recent posts.
      */
-    override fun getPosts(): List<Post>? {
-        return fetchEntities(postApiClient.getPosts())
+    override fun getPosts(page: Int, size: Int): List<Post>? {
+        return fetchPage(postApiClient.getPosts(page, size))?.content
     }
 }

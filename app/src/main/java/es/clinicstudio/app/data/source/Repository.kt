@@ -1,38 +1,40 @@
 package es.clinicstudio.app.data.source
 
-/**
- * @author vh @ recursividad.es
- */
-
 import android.net.ConnectivityManager
 import android.util.Log
 import com.google.gson.GsonBuilder
+import es.clinicstudio.app.BuildConfig
+import es.clinicstudio.app.domain.entity.Page
 import es.clinicstudio.app.domain.error.CommunicationException
 import es.clinicstudio.app.domain.error.NetworkUnreachableException
 import retrofit2.Call
 import retrofit2.Response
 import java.io.IOException
 
-
 /**
  * Base repository class with some useful and common methods already implemented.
  *
- * @author victor.hernandezbermejo @ gmail.com
+ * @author vh @ recursividad.es
  */
-abstract class Repository(private val connectivityManager: ConnectivityManager, private val loggingTag: String) {
+abstract class Repository(
+        private val connectivityManager: ConnectivityManager,
+        private val loggingTag: String
+) {
 
     /**
-     * Fetch one entity invoking the specified [Call].
+     * Perform the specified [call] and get its response.
      *
-     * @param <T> Type of the entity to retrieve.
-     * @param call API call.
-     * @return Returns the entity retrieved when executing the call.
+     * @param[T] Type of the elements expected in the call response body.
+     * @param[call] API call to perform.
+     *
+     * @return Response obtained after executing the specified [call].
+     *
      * @throws IllegalArgumentException Thrown if some invalid argument is passed to the method.
      * @throws NetworkUnreachableException Thrown if the device cannot establish a connection to the internet.
      * @throws CommunicationException Thrown if a communication problem occurred when executing the call.
-    </T> */
+     */
     @Throws(IllegalArgumentException::class, NetworkUnreachableException::class, CommunicationException::class)
-    protected fun <T> fetchEntity(call: Call<T>?): T? {
+    private fun <T> call(call: Call<T>?): Response<T> {
         // Check input
         if (call == null) {
             Log.e(loggingTag, "ARGUMENTS :: Couldn't fetch an entity from the API without a call!")
@@ -45,10 +47,11 @@ abstract class Repository(private val connectivityManager: ConnectivityManager, 
             throw NetworkUnreachableException()
         }
 
-        var result: T? = null
+        val response: Response<T>
+
         try {
             // Execute the API call
-            val response = call.execute()
+            response = call.execute()
 
             // Verify that it was possible to connect to the API and obtain a response
             if (response == null) {
@@ -59,7 +62,6 @@ abstract class Repository(private val connectivityManager: ConnectivityManager, 
             // Verify that the response was successful
             if (response.isSuccessful) {
                 Log.v(loggingTag, String.format("REST API :: Success when calling '%s %s'. The response was:\nStatus: %s\n\n%s\n", method(call), url(call), status(response), body(response)))
-                result = response.body()
             } else {
                 Log.e(loggingTag, String.format("REST API :: Some error occurred when calling '%s %s'. The response was:\nStatus: %s\n\n%s\n", method(call), url(call), status(response), body(response)))
             }
@@ -67,57 +69,89 @@ abstract class Repository(private val connectivityManager: ConnectivityManager, 
         } catch (e: IOException) {
             Log.e(loggingTag, String.format("REST API :: Some error occurred when calling '%s %s'.", method(call), url(call)), e)
             throw CommunicationException(cause = e)
+        }
+
+        return response
+    }
+
+    /**
+     * Executed the specified [call] to retrieve one entity from the API.
+     *
+     * @param[T] Type of the entity expected in the [call] response body.
+     * @param[call] API call to perform.
+     *
+     * @return Entity obtained after executing the specified [call].
+     *
+     * @throws IllegalArgumentException Thrown if some invalid argument is passed to the method.
+     * @throws NetworkUnreachableException Thrown if the device cannot establish a connection to the internet.
+     * @throws CommunicationException Thrown if a communication problem occurred when executing the call.
+     */
+    @Throws(IllegalArgumentException::class, NetworkUnreachableException::class, CommunicationException::class)
+    protected fun <T> fetchEntity(call: Call<T>?): T? {
+        val response = call(call)
+
+        var result: T? = null
+        if (response.isSuccessful) {
+            result = response.body()
         }
 
         return result
     }
 
     /**
-     * Fetch a list of entities invoking the specified [Call].
+     * Executed the specified [call] to retrieve a list of entities from the API.
      *
-     * @param <T> Type of the entities to retrieve.
-     * @param call API call.
-     * @return Returns a list of entities retrieved when executing the call.
+     * @param[T] Type of the entities expected in the [call] response body.
+     * @param[call] API call to perform.
+     *
+     * @return List of entities obtained after executing the specified [call].
+     *
      * @throws IllegalArgumentException Thrown if some invalid argument is passed to the method.
      * @throws NetworkUnreachableException Thrown if the device cannot establish a connection to the internet.
      * @throws CommunicationException Thrown if a communication problem occurred when executing the call.
-    </T> */
+     */
     @Throws(IllegalArgumentException::class, NetworkUnreachableException::class, CommunicationException::class)
     protected fun <T> fetchEntities(call: Call<List<T>>?): List<T>? {
-        // Check input
-        if (call == null) {
-            Log.e(loggingTag, "ARGUMENTS :: Couldn't fetch an entity from the API without a call!")
-            throw IllegalArgumentException()
-        }
-
-        // Check that the device can connect to the internet
-        if (!canConnect()) {
-            Log.e(loggingTag, "CONNECTIVITY :: The device doesn't seem to have an active Internet connection")
-            throw NetworkUnreachableException()
-        }
+        val response = call(call)
 
         var result: List<T>? = null
-        try {
-            // Execute the API call
-            val response = call.execute()
+        if (response.isSuccessful) {
+            result = response.body()
+        }
 
-            // Verify that it was possible to connect to the API and obtain a response
-            if (response == null) {
-                Log.e(loggingTag, String.format("REST API :: Some error occurred when calling '%s %s'. Null response", method(call), url(call)))
-                throw CommunicationException()
-            }
+        return result
+    }
 
-            // Verify that the response was successful
-            if (response.isSuccessful) {
-                Log.v(loggingTag, String.format("REST API :: Success when calling '%s %s'. The response was:\nStatus: %s\n\n%s\n", method(call), url(call), status(response), body(response)))
-                result = response.body()
-            } else {
-                Log.e(loggingTag, String.format("REST API :: Some error occurred when calling '%s %s'. The response was:\nStatus: %s\n\n%s\n", method(call), url(call), status(response), body(response)))
-            }
+    /**
+     * Executed the specified [call] to retrieve a page of entities from the API.
+     *
+     * @param[T] Type of the entities expected in the [call] response body.
+     * @param[call] API call to perform.
+     *
+     * @return Page of entities obtained after executing the specified [call].
+     *
+     * @throws IllegalArgumentException Thrown if some invalid argument is passed to the method.
+     * @throws NetworkUnreachableException Thrown if the device cannot establish a connection to the internet.
+     * @throws CommunicationException Thrown if a communication problem occurred when executing the call.
+     */
+    @Throws(IllegalArgumentException::class, NetworkUnreachableException::class, CommunicationException::class)
+    protected fun<T> fetchPage(call: Call<List<T>>): Page<T>? {
+        var result: Page<T>? = null
 
-        } catch (e: IOException) {
-            Log.e(loggingTag, String.format("REST API :: Some error occurred when calling '%s %s'.", method(call), url(call)), e)
-            throw CommunicationException(cause = e)
+        val response = call(call)
+        if (response.isSuccessful) {
+            val content = response.body()
+            val page = call.request()?.url()?.queryParameter("page")?.toInt()
+            val capacity = call.request()?.url()?.queryParameter("per_page")?.toInt()
+            val totalPages = response.headers()?.get(BuildConfig.TOTAL_PAGES_HEADER)?.toInt()
+
+            result = Page(
+                    content = content,
+                    number = page,
+                    capacity = capacity,
+                    size = content?.size,
+                    isLast = page != null && totalPages != null && page == totalPages
+            )
         }
 
         return result

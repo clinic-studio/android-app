@@ -18,6 +18,7 @@ android {
 
         // Build configuration
         buildConfigField 'String', 'BASE_URL', '"http://clinicstudio.es/wp-json/wp/v2/"'
+        buildConfigField 'String', 'TOTAL_PAGES_HEADER', '"X-WP-TotalPages"'
     }
 
     buildTypes {
