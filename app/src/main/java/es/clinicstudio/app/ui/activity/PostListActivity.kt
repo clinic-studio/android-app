@@ -3,6 +3,7 @@ package es.clinicstudio.app.ui.activity
 import android.os.Bundle
 import es.clinicstudio.app.R
 import es.clinicstudio.app.domain.entity.Post
+import es.clinicstudio.app.ui.lists.adapter.ListAdapter
 import es.clinicstudio.app.ui.lists.adapter.PostListAdapter
 import es.clinicstudio.app.ui.presenter.PostListPresenter
 import es.clinicstudio.app.ui.view.PostListView
@@ -18,7 +19,6 @@ class PostListActivity : BaseActivity(), PostListView {
 
     @Inject
     lateinit var presenter: PostListPresenter
-
 
     private var postListAdapter: PostListAdapter? = null
 
@@ -36,13 +36,14 @@ class PostListActivity : BaseActivity(), PostListView {
         // Initialize the post list adapter
         postListAdapter = PostListAdapter(layoutInflater)
         postListAdapter?.attach(recyclerView = postRecyclerView)
-    }
-
-    override fun onStart() {
-        super.onStart()
+        postListAdapter?.notLoadedItemCallback = object : ListAdapter.NotLoadedItemCallback {
+            override fun onNotLoadedItemRequested(position: Int) {
+                presenter.loadPost(position)
+            }
+        }
 
         // Load the list of posts from the blog
-        presenter.loadPosts()
+        presenter.loadPostPage()
     }
 
     /**
@@ -51,7 +52,10 @@ class PostListActivity : BaseActivity(), PostListView {
      * @param posts Lists of posts.
      */
     override fun showPosts(posts: List<Post>) {
-        postListAdapter?.clear()
         postListAdapter?.add(posts)
+    }
+
+    override fun setTotalPosts(i: Int) {
+        postListAdapter?.size = i
     }
 }

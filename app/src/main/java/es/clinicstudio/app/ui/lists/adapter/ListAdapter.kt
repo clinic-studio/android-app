@@ -1,9 +1,9 @@
 package es.clinicstudio.app.ui.lists.adapter
 
+import android.support.v7.util.SortedList
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import es.clinicstudio.app.ui.lists.holder.RowViewHolder
-import java.util.*
 
 /**
  * Extension of [RecyclerView.Adapter] to provide the basic and common
@@ -11,10 +11,63 @@ import java.util.*
  *
  * @author vh @ recursividad.es
  */
-abstract class ListAdapter<in T, VH: RowViewHolder<T>>: RecyclerView.Adapter<VH>() {
+abstract class ListAdapter<in T: Comparable<T>, VH: RowViewHolder<T>>(klass: Class<T>): RecyclerView.Adapter<VH>() {
 
-    private var items: MutableList<T>? = null
+    var size: Int? = null
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
+
     private var recyclerView: RecyclerView? = null
+    private var items: SortedList<T> = SortedList(
+            klass,
+            object: SortedList.Callback<T>() {
+                override fun compare(o1: T, o2: T): Int {
+                    return o1.compareTo(o2)
+                }
+
+                override fun onChanged(position: Int, count: Int) {
+                    notifyItemRangeChanged(position, count)
+                }
+
+                override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
+                    return (oldItem.hashCode() == newItem.hashCode())
+                }
+
+                override fun areItemsTheSame(item1: T, item2: T): Boolean {
+                    return item1 == item2
+                }
+
+                override fun onInserted(position: Int, count: Int) {
+                    notifyItemRangeChanged(position, count)
+                }
+
+                override fun onRemoved(position: Int, count: Int) {
+                    notifyItemRangeChanged(position, count)
+                }
+
+                override fun onMoved(fromPosition: Int, toPosition: Int) {
+                    notifyItemMoved(fromPosition, toPosition)
+                }
+            })
+
+    var notLoadedItemCallback: NotLoadedItemCallback? = null
+
+    /**
+     * Callback invoked when an item that is not yet present in
+     * the list has been requested to be shown.
+     */
+    interface NotLoadedItemCallback {
+
+        /**
+         * A new item that has not yet been loaded has been
+         * requested to be shown.
+         *
+         * @param[position] Position of the new requested item.
+         */
+        fun onNotLoadedItemRequested(position: Int)
+    }
 
     /**
      * Bind a view holder with its content.
@@ -23,18 +76,22 @@ abstract class ListAdapter<in T, VH: RowViewHolder<T>>: RecyclerView.Adapter<VH>
      * @param position Position of the item that should be displayed on the view holder.
      */
     override fun onBindViewHolder(holder: VH, position: Int) {
-        if (position < itemCount) {
-            holder.setContent(items!![position])
+        if ((items.size()) > position) {
+            holder.setContent(items[position])
+        }
+        else {
+            notLoadedItemCallback?.onNotLoadedItemRequested(position)
+            holder.placeholder()
         }
     }
 
     /**
-     * Get the total number of items in this list adapter.
+     * Get the total page of items in this list adapter.
      *
      * @return Number of items in the adapter.
      */
     override fun getItemCount(): Int {
-        return items?.size ?: 0
+        return size ?: Int.MAX_VALUE
     }
 
     /**
@@ -57,7 +114,7 @@ abstract class ListAdapter<in T, VH: RowViewHolder<T>>: RecyclerView.Adapter<VH>
      */
     fun attach(recyclerView: RecyclerView, orientation: Int = LinearLayoutManager.VERTICAL, reverseLayout: Boolean = false) {
         // Dispose the current recycler view
-        disposeRecyclerView()
+        detach()
 
         // Set the list adapter to the new recycler view
         recyclerView.adapter = this
@@ -77,8 +134,8 @@ abstract class ListAdapter<in T, VH: RowViewHolder<T>>: RecyclerView.Adapter<VH>
      * @param layoutManager Layout manager to use to present the items in the recycler view.
      */
     fun attach(recyclerView: RecyclerView, layoutManager: RecyclerView.LayoutManager? = null) {
-        // Dispose the current recycler view
-        disposeRecyclerView()
+        // Detach the current recycler view
+        detach()
 
         // Set the list adapter to the new recycler view
         recyclerView.adapter = this
@@ -90,7 +147,7 @@ abstract class ListAdapter<in T, VH: RowViewHolder<T>>: RecyclerView.Adapter<VH>
     /**
      * Unset this recycler view attached to this list adapter.
      */
-    fun disposeRecyclerView() {
+    fun detach() {
         if (recyclerView != null) {
             recyclerView!!.adapter = null
             recyclerView!!.layoutManager = null
@@ -105,17 +162,7 @@ abstract class ListAdapter<in T, VH: RowViewHolder<T>>: RecyclerView.Adapter<VH>
      * @param item Item to be added.
      */
     fun add(item: T) {
-        // Check if the item list is already instantiated
-        if (items == null) {
-            items = ArrayList()
-        }
-
-        // Add the item to the list
-        val index = items!!.size
-        items!!.add(item)
-
-        // Notify the changes
-        notifyItemInserted(index)
+        items.add(item)
     }
 
     /**
@@ -124,30 +171,13 @@ abstract class ListAdapter<in T, VH: RowViewHolder<T>>: RecyclerView.Adapter<VH>
      * @param collection Collection of items to be added.
      */
     fun add(collection: Collection<T>) {
-        // Check if the item list is already instantiated
-        if (items == null) {
-            items = ArrayList()
-        }
-
-        // Add the items to the list
-        val index = items!!.size
-        items!!.addAll(collection)
-
-        // Notify changes
-        notifyItemRangeInserted(index, collection.size)
+        items.addAll(collection)
     }
 
     /**
      * Clear the content of this list adapter.
      */
     fun clear() {
-        // Clear the content
-        if (items != null) {
-            val itemCount = itemCount
-            items = ArrayList()
-
-            // Notify the changes
-            notifyItemRangeRemoved(0, itemCount)
-        }
+        items.clear()
     }
 }

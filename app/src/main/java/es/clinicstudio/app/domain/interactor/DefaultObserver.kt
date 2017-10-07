@@ -20,9 +20,9 @@ open class DefaultObserver<T> : DisposableObserver<T>() {
      * The `Observable` will not call this method again after it calls either [onComplete] or
      * [onError].
      *
-     * @param t the item emitted by the Observable
+     * @param[next] the item emitted by the Observable
      */
-    override fun onNext(t: T) {
+    override fun onNext(next: T) {
         // no-op by default
     }
 
@@ -32,7 +32,7 @@ open class DefaultObserver<T> : DisposableObserver<T>() {
      * If the [Observable] calls this method, it will not thereafter call [onNext] or
      * [onComplete].
      *
-     * @param e the exception encountered by the Observable
+     * @param[e] the exception encountered by the Observable
      */
     override fun onError(e: Throwable) {
         // no-op by default

@@ -1,5 +1,6 @@
 package es.clinicstudio.app.data.source
 
+import es.clinicstudio.app.domain.entity.Page
 import es.clinicstudio.app.domain.entity.Post
 
 /**
@@ -14,5 +15,5 @@ interface PostRepository {
      * @param[size] Number of elements in the result.
      * @return Returns the list of most recent posts.
      */
-    fun getPosts(page: Int = 1, size: Int = 10): List<Post>?
+    fun getPosts(page: Int = 1, size: Int = 10): Page<Post>?
 }

@@ -4,6 +4,7 @@ import android.net.ConnectivityManager
 import es.clinicstudio.app.data.api.PostApiClient
 import es.clinicstudio.app.data.source.PostRepository
 import es.clinicstudio.app.data.source.Repository
+import es.clinicstudio.app.domain.entity.Page
 import es.clinicstudio.app.domain.entity.Post
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,7 +27,7 @@ class PostRepositoryImpl @Inject constructor(
      * @param[size] Number of elements in the result.
      * @return Returns the list of most recent posts.
      */
-    override fun getPosts(page: Int, size: Int): List<Post>? {
-        return fetchPage(postApiClient.getPosts(page, size))?.content
+    override fun getPosts(page: Int, size: Int): Page<Post>? {
+        return fetchPage(postApiClient.getPosts(page, size))
     }
 }

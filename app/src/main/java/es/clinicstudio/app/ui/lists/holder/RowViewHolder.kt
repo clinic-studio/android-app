@@ -23,4 +23,6 @@ open abstract class RowViewHolder<in T>(itemView: View): RecyclerView.ViewHolder
      * @param content Content to be displayed.
      */
     abstract fun setContent(content: T)
+
+    abstract fun placeholder()
 }

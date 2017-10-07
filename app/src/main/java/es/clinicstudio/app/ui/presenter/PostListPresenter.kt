@@ -1,5 +1,6 @@
 package es.clinicstudio.app.ui.presenter
 
+import es.clinicstudio.app.domain.entity.Page
 import es.clinicstudio.app.domain.entity.Post
 import es.clinicstudio.app.domain.interactor.DefaultObserver
 import es.clinicstudio.app.domain.interactor.GetPostsUseCase
@@ -17,6 +18,9 @@ class PostListPresenter
 
     private var view: PostListView? = null
 
+    private val defaultPageSize = 10
+    private val loading: MutableList<Int> = ArrayList()
+
     /**
      * Set the view that will display the data.
      *
@@ -27,13 +31,40 @@ class PostListPresenter
     }
 
     /**
-     * Load the list of posts from the API to the view.
+     * Load a page of posts from the API to the view.
+     *
+     * @param[page] Number of the requested page of posts.
      */
-    fun loadPosts() {
-        getPostsUseCase.execute(object: DefaultObserver<List<Post>>() {
-            override fun onNext(posts: List<Post>) {
-                view?.showPosts(posts)
-            }
-        })
+    fun loadPostPage(page: Int = 1) {
+        loading.add(page)
+        getPostsUseCase.execute(
+                // Observer
+                object: DefaultObserver<Page<Post>>() {
+                    override fun onNext(next: Page<Post>) {
+                        loading.remove(page)
+
+                        view?.showPosts(next.content)
+                        view?.setTotalPosts(next.collectionSize ?: Int.MAX_VALUE)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        loading.remove(page)
+                    }
+                },
+                // Params
+                GetPostsUseCase.Params(page, defaultPageSize))
+    }
+
+    /**
+     * Load the post in indicated [position].
+     *
+     * @param[position] Position of the requested post.
+     */
+    fun loadPost(position: Int) {
+        val page = (position / defaultPageSize) + 1
+
+        if (!loading.contains(page)) {
+            loadPostPage(page)
+        }
     }
 }

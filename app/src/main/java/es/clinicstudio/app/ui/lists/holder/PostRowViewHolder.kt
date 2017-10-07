@@ -104,7 +104,6 @@ class PostRowViewHolder(view: View): RowViewHolder<Post>(view) {
         if (imageUrls != null) {
             Glide.with(context)
                     .load(imageUrls.getBestFit(context?.resources?.displayMetrics?.widthPixels ?: 0))
-                    .thumbnail(Glide.with(context).load(imageUrls.getSmallest()))
                     .listener(
                             object : RequestListener<Drawable> {
                                 override fun onResourceReady(resource: Drawable?, model: Any?, target: com.bumptech.glide.request.target.Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
@@ -131,5 +130,9 @@ class PostRowViewHolder(view: View): RowViewHolder<Post>(view) {
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(postMainPictureImageView)
         }
+    }
+
+    override fun placeholder() {
+
     }
 }

@@ -1,6 +1,7 @@
 package es.clinicstudio.app.domain.interactor
 
 import es.clinicstudio.app.data.source.PostRepository
+import es.clinicstudio.app.domain.entity.Page
 import es.clinicstudio.app.domain.entity.Post
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -10,23 +11,37 @@ import javax.inject.Inject
  *
  * @author vh @ recursividad.es
  */
-class GetPostsUseCase @Inject constructor(private val postRepository: PostRepository): UseCase<List<Post>, GetPostsUseCase.Params>() {
+class GetPostsUseCase @Inject constructor(private val postRepository: PostRepository): UseCase<Page<Post>, GetPostsUseCase.Params>() {
 
-    class Params
+    data class Params(
+            val page: Int = 1,
+            val size: Int = 10
+    )
 
-    override fun buildObservable(params: Params?): Observable<List<Post>> {
-        return Observable.create<List<Post>> {
-            emitter ->
-            val posts = getPosts()
-            if (posts != null && !posts.isEmpty()) {
-                emitter.onNext(posts)
-            }
+    /**
+     * Create a new observable to obtain the page of posts.
+     *
+     * @param[params] Parameters to apply when executing the use case.
+     */
+    override fun buildObservable(params: Params?): Observable<Page<Post>> {
+        return Observable
+                .create<Page<Post>> {
+                    val posts = getPosts(params?.page ?: 1, params?.size ?: 10)
+                    if (posts != null) {
+                        it.onNext(posts)
+                    }
 
-            emitter.onComplete()
-        }
+                    it.onComplete()
+                }
     }
 
-    protected fun getPosts(): List<Post>? {
-        return postRepository.getPosts()
+    /**
+     * Get the page of posts.
+     *
+     * @param[page] Number of page to obtain.
+     * @param[size] Number of elements to obtain.
+     */
+    private fun getPosts(page: Int, size: Int): Page<Post>? {
+        return postRepository.getPosts(page, size)
     }
 }

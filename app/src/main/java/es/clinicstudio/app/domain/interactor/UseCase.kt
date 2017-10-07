@@ -10,12 +10,12 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Base class fore every use case interactor declared in the app.
  *
- * @param <T> Return type of the use case.
- * @param <P> Parameters for the use case execution.
+ * @param[T] Return type of the use case.
+ * @param[P] Parameters for the use case execution.
  *
  * @author vh @ recursividad.es
  */
-abstract class UseCase<T, P>(
+abstract class UseCase<T, in P>(
         private val executionScheduler: Scheduler = Schedulers.io(),
         private val observerScheduler: Scheduler = AndroidSchedulers.mainThread()
 ) {
@@ -23,7 +23,7 @@ abstract class UseCase<T, P>(
     /**
      * Creates an observable ready to execute this use case with the given parameters.
      *
-     * @param params Parameters for the use case execution.
+     * @param[params] Parameters for the use case execution.
      * @return Observable ready to execute this use case with the specified parameters.
      */
     abstract fun buildObservable(params: P?): Observable<T>
@@ -31,8 +31,8 @@ abstract class UseCase<T, P>(
     /**
      * Execute the use case.
      *
-     * @param observer [DisposableObserver] that will be notified with the result of the use case execution.
-     * @param params Parameters for the execution of the use case.
+     * @param[observer] [DisposableObserver] that will be notified with the result of the use case execution.
+     * @param[params] Parameters for the execution of the use case.
      */
     fun execute(observer: DisposableObserver<T>, params: P? = null): Disposable {
         // Build the observable and execute it
