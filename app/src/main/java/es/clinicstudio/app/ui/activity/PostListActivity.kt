@@ -22,7 +22,6 @@ class PostListActivity: BaseActivity(), PostListView, RowViewHolder.OnItemClicke
     lateinit var presenter: PostListPresenter
 
     private var postListAdapter: PostListAdapter? = null
-    var onItemClickedListener: RowViewHolder.OnItemClickedListener<Post>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +45,10 @@ class PostListActivity: BaseActivity(), PostListView, RowViewHolder.OnItemClicke
 
         // Load the list of posts from the blog
         presenter.loadPostPage()
+
+        // Configure action bar
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
     /**
