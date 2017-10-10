@@ -2,24 +2,27 @@ package es.clinicstudio.app.ui.lists.holder
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.support.annotation.ColorInt
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import butterknife.BindColor
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.Request
 import com.bumptech.glide.request.RequestListener
 import es.clinicstudio.app.R
 import es.clinicstudio.app.domain.entity.ImageUrlResource
 import es.clinicstudio.app.domain.entity.Post
 import es.clinicstudio.app.ui.utils.StringUtils
+import es.recursividad.glimmer.ui.widget.GlimmerView
 import jp.wasabeef.blurry.Blurry
 
 
@@ -49,6 +52,24 @@ class PostRowViewHolder(view: View, onItemClickedListener: OnItemClickedListener
     @BindView(R.id.postPublishDateTextView)
     lateinit var postPublishDateTextView: TextView
 
+    @BindView(R.id.postCategoryPlaceholder)
+    lateinit var postCategoryPlaceholder: GlimmerView
+
+    @BindView(R.id.postTitlePlaceholder)
+    lateinit var postTitlePlaceholder: GlimmerView
+
+    @BindView(R.id.postAuthorPlaceholder)
+    lateinit var postAuthorPlaceholder: GlimmerView
+
+    @BindView(R.id.postPublishDatePlaceholder)
+    lateinit var postPublishDatePlaceholder: GlimmerView
+
+
+    @BindColor(R.color.material_gray100_alpha50) @JvmField @ColorInt
+    var materialGray100Alpha50Color: Int = 0
+
+
+    private var glideRequest: Request? = null
 
     // Initialize the row view holder
     init {
@@ -64,12 +85,29 @@ class PostRowViewHolder(view: View, onItemClickedListener: OnItemClickedListener
     override fun recycle() {
         content = null
 
+        //
+        // Hide placeholders
+        //
+        postCategoryPlaceholder.visibility = View.GONE
+        postTitlePlaceholder.visibility = View.GONE
+        postAuthorPlaceholder.visibility = View.GONE
+        postPublishDatePlaceholder.visibility = View.GONE
+
+
+        //
+        // Remove content
+        //
         postMainPictureImageView.setImageDrawable(null)
         postBlurBackgroundImageView.setImageDrawable(null)
         postCategoryTextView.text = null
         postTitleTextView.text = null
         postAuthorTextView.text = null
         postPublishDateTextView.text = null
+
+        //
+        // Clear the Glide request in case it hasn't finished yet
+        //
+        glideRequest?.clear()
     }
 
     /**
@@ -89,6 +127,18 @@ class PostRowViewHolder(view: View, onItemClickedListener: OnItemClickedListener
     override fun setContent(content: Post) {
         this.content = content
 
+        //
+        // Hide placeholders
+        //
+        postCategoryPlaceholder.visibility = View.GONE
+        postTitlePlaceholder.visibility = View.GONE
+        postAuthorPlaceholder.visibility = View.GONE
+        postPublishDatePlaceholder.visibility = View.GONE
+
+
+        //
+        // Display content
+        //
         // Category
         if (content.embedded.terms.isNotEmpty() && content.embedded.terms[0].isNotEmpty()) {
             postCategoryTextView.text = content.embedded.terms[0][0].name
@@ -111,7 +161,7 @@ class PostRowViewHolder(view: View, onItemClickedListener: OnItemClickedListener
         // Background image
         val imageUrls = ImageUrlResource.from(content.content.rendered)?.get(0)
         if (imageUrls != null) {
-            Glide.with(context)
+            glideRequest = Glide.with(context)
                     .load(imageUrls.getBestFit(context?.resources?.displayMetrics?.widthPixels ?: 0))
                     .listener(
                             object : RequestListener<Drawable> {
@@ -125,7 +175,7 @@ class PostRowViewHolder(view: View, onItemClickedListener: OnItemClickedListener
 
                                         if (height > 0 && width > 0) {
                                             val blurryBitmap = Bitmap.createBitmap(bitmap, 0, bitmap.height - height, width, height)
-                                            Blurry.with(context).radius(10).sampling(1).color(Color.argb(127, 248, 248, 248)).from(blurryBitmap).into(postBlurBackgroundImageView)
+                                            materialGray100Alpha50Color?.let { Blurry.with(context).radius(10).sampling(1).color(it).from(blurryBitmap).into(postBlurBackgroundImageView) }
                                         }
                                     }
 
@@ -138,10 +188,14 @@ class PostRowViewHolder(view: View, onItemClickedListener: OnItemClickedListener
                             })
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(postMainPictureImageView)
+                    .request
         }
     }
 
     override fun placeholder() {
-
+        postCategoryPlaceholder.visibility = View.VISIBLE
+        postTitlePlaceholder.visibility = View.VISIBLE
+        postAuthorPlaceholder.visibility = View.VISIBLE
+        postPublishDatePlaceholder.visibility = View.VISIBLE
     }
 }

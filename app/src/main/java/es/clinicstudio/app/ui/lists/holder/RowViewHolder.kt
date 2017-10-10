@@ -48,11 +48,15 @@ abstract class RowViewHolder<T>(itemView: View, onItemClickedListener: OnItemCli
     abstract fun getContent(): T?
 
     /**
-     * Set the content of the row item.
+     * Display the content of the row item.
      *
      * @param content Content to be displayed.
      */
     abstract fun setContent(content: T)
 
+    /**
+     * Display the placeholder views while the content for
+     * this view loads.
+     */
     abstract fun placeholder()
 }

@@ -9,6 +9,7 @@
     android:foreground="?attr/selectableItemBackgroundBorderless"
     >
 
+    <!-- Content -->
     <ImageView
         android:id="@+id/postMainPictureImageView"
 
@@ -35,6 +36,7 @@
         app:layout_constraintRight_toRightOf="parent"
 
         android:scaleType="centerCrop"
+        android:background="@color/material_gray100_alpha50"
     />
 
     <Space
@@ -135,6 +137,61 @@
         android:ellipsize="end"
 
         tools:text="hace 12 horas"
+    />
+
+    <!-- Placeholder -->
+    <es.recursividad.glimmer.ui.widget.GlimmerView
+        android:id="@+id/postCategoryPlaceholder"
+
+        android:layout_width="80dp"
+        android:layout_height="00dp"
+
+        app:layout_constraintTop_toTopOf="@+id/postCategoryTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/postCategoryTextView"
+        app:layout_constraintLeft_toLeftOf="@+id/postCategoryTextView"
+
+        android:visibility="gone"
+    />
+
+    <es.recursividad.glimmer.ui.widget.GlimmerView
+        android:id="@+id/postTitlePlaceholder"
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        app:layout_constraintTop_toTopOf="@+id/postTitleTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/postTitleTextView"
+        app:layout_constraintLeft_toLeftOf="@+id/postTitleTextView"
+        app:layout_constraintRight_toRightOf="@+id/postTitleTextView"
+
+        android:visibility="gone"
+    />
+
+    <es.recursividad.glimmer.ui.widget.GlimmerView
+        android:id="@+id/postAuthorPlaceholder"
+
+        android:layout_width="120dp"
+        android:layout_height="0dp"
+
+        app:layout_constraintTop_toTopOf="@+id/postAuthorTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/postAuthorTextView"
+        app:layout_constraintLeft_toLeftOf="@+id/postAuthorTextView"
+
+        android:visibility="gone"
+    />
+
+    <es.recursividad.glimmer.ui.widget.GlimmerView
+        android:id="@+id/postPublishDatePlaceholder"
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        app:layout_constraintTop_toTopOf="@+id/postPublishDateTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/postPublishDateTextView"
+        app:layout_constraintLeft_toLeftOf="@+id/postPublishDateTextView"
+        app:layout_constraintRight_toRightOf="@+id/postPublishDateTextView"
+
+        android:visibility="gone"
     />
 
 </android.support.constraint.ConstraintLayout>
