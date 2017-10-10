@@ -26,7 +26,7 @@ import jp.wasabeef.blurry.Blurry
 /**
  * @author vh @ recursividad.es
  */
-class PostRowViewHolder(view: View): RowViewHolder<Post>(view) {
+class PostRowViewHolder(view: View, onItemClickedListener: OnItemClickedListener<Post>? = null): RowViewHolder<Post>(view, onItemClickedListener) {
 
     private var content: Post? = null
     private var context: Context? = null
@@ -70,6 +70,15 @@ class PostRowViewHolder(view: View): RowViewHolder<Post>(view) {
         postTitleTextView.text = null
         postAuthorTextView.text = null
         postPublishDateTextView.text = null
+    }
+
+    /**
+     * Get the content hold in this row.
+     *
+     * @return Content hold by the view.
+     */
+    override fun getContent(): Post? {
+        return content
     }
 
     /**

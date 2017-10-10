@@ -11,6 +11,6 @@ class SplashActivity: BaseActivity() {
         super.onStart()
 
         // Navigate to the post list
-        navigator.goToPostListScreen(this)
+        router.goToPostListScreen(this)
     }
 }

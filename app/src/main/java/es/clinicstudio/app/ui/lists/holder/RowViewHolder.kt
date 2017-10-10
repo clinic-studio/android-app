@@ -10,12 +10,42 @@ import android.view.View
  *
  * @author vh @ recursividad.es
  */
-open abstract class RowViewHolder<in T>(itemView: View): RecyclerView.ViewHolder(itemView) {
+abstract class RowViewHolder<T>(itemView: View, onItemClickedListener: OnItemClickedListener<T>? = null): RecyclerView.ViewHolder(itemView) {
+
+    init {
+        itemView.setOnClickListener {
+            val content = getContent()
+            if (content != null) {
+                onItemClickedListener?.onItemClicked(content)
+            }
+        }
+    }
+
+    /**
+     * Callback listener that will be invoked when the
+     * row is clicked.
+     */
+    interface OnItemClickedListener<in T> {
+
+        /**
+         * Invoked when the row is clicked.
+         *
+         * @param[item] Content of the row.
+         */
+        fun onItemClicked(item: T)
+    }
 
     /**
      * Recycle the view for further uses.
      */
     abstract fun recycle()
+
+    /**
+     * Get the content hold in this row.
+     *
+     * @return Content hold by the view.
+     */
+    abstract fun getContent(): T?
 
     /**
      * Set the content of the row item.

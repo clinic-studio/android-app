@@ -11,7 +11,7 @@ import es.clinicstudio.app.ui.lists.holder.RowViewHolder
  *
  * @author vh @ recursividad.es
  */
-abstract class ListAdapter<in T: Comparable<T>, VH: RowViewHolder<T>>(klass: Class<T>): RecyclerView.Adapter<VH>() {
+abstract class ListAdapter<T: Comparable<T>, VH: RowViewHolder<T>>(klass: Class<T>): RecyclerView.Adapter<VH>() {
 
     var size: Int? = null
     set(value) {
@@ -20,6 +20,7 @@ abstract class ListAdapter<in T: Comparable<T>, VH: RowViewHolder<T>>(klass: Cla
     }
 
     private var recyclerView: RecyclerView? = null
+
     private var items: SortedList<T> = SortedList(
             klass,
             object: SortedList.Callback<T>() {

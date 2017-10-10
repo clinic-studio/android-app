@@ -5,7 +5,7 @@ import android.net.ConnectivityManager
 import dagger.Module
 import dagger.Provides
 import es.clinicstudio.app.App
-import es.clinicstudio.app.ui.utils.Navigator
+import es.clinicstudio.app.ui.utils.Router
 import javax.inject.Singleton
 
 
@@ -38,13 +38,13 @@ class ApplicationModule(private val app: App) {
     }
 
     /**
-     * Provides the application [Navigator].
+     * Provides the application [Router].
      *
-     * @param context Auto-injected application context.
-     * @return Application navigator.
+     * @param[context] Auto-injected application context.
+     * @return Application router.
      */
     @Provides @Singleton
-    fun provideNavigator(context: Context): Navigator {
-        return Navigator(context)
+    fun provideNavigator(context: Context): Router {
+        return Router(context)
     }
 }

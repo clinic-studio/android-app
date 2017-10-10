@@ -5,6 +5,7 @@ import es.clinicstudio.app.R
 import es.clinicstudio.app.domain.entity.Post
 import es.clinicstudio.app.ui.lists.adapter.ListAdapter
 import es.clinicstudio.app.ui.lists.adapter.PostListAdapter
+import es.clinicstudio.app.ui.lists.holder.RowViewHolder
 import es.clinicstudio.app.ui.presenter.PostListPresenter
 import es.clinicstudio.app.ui.view.PostListView
 import kotlinx.android.synthetic.main.activity_post_list.*
@@ -15,12 +16,13 @@ import javax.inject.Inject
  *
  * @author vh @ recursividad.es
  */
-class PostListActivity : BaseActivity(), PostListView {
+class PostListActivity: BaseActivity(), PostListView, RowViewHolder.OnItemClickedListener<Post> {
 
     @Inject
     lateinit var presenter: PostListPresenter
 
     private var postListAdapter: PostListAdapter? = null
+    var onItemClickedListener: RowViewHolder.OnItemClickedListener<Post>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +36,7 @@ class PostListActivity : BaseActivity(), PostListView {
         presenter.setView(this)
 
         // Initialize the post list adapter
-        postListAdapter = PostListAdapter(layoutInflater)
+        postListAdapter = PostListAdapter(layoutInflater, this)
         postListAdapter?.attach(recyclerView = postRecyclerView)
         postListAdapter?.notLoadedItemCallback = object : ListAdapter.NotLoadedItemCallback {
             override fun onNotLoadedItemRequested(position: Int) {
@@ -57,5 +59,9 @@ class PostListActivity : BaseActivity(), PostListView {
 
     override fun setTotalPosts(i: Int) {
         postListAdapter?.size = i
+    }
+
+    override fun onItemClicked(item: Post) {
+        router.goToPostContentScreen(this, item.title.rendered, item.content.rendered)
     }
 }

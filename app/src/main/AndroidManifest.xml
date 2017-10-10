@@ -37,8 +37,14 @@
             </intent-filter>
         </activity>
 
+        <!-- Post list activity -->
         <activity
             android:name="es.clinicstudio.app.ui.activity.PostListActivity"
+        />
+
+        <!-- Post content activity -->
+        <activity
+            android:name="es.clinicstudio.app.ui.activity.PostContentActivity"
         />
 
     </application>

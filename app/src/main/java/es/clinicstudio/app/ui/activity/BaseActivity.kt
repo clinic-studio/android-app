@@ -7,7 +7,7 @@ import es.clinicstudio.app.App
 import es.clinicstudio.app.di.ActivityComponent
 import es.clinicstudio.app.di.DaggerActivityComponent
 import es.clinicstudio.app.di.module.ActivityModule
-import es.clinicstudio.app.ui.utils.Navigator
+import es.clinicstudio.app.ui.utils.Router
 import javax.inject.Inject
 
 
@@ -19,7 +19,7 @@ import javax.inject.Inject
 open class BaseActivity: AppCompatActivity() {
 
     @Inject lateinit var context: Context
-    @Inject lateinit var navigator: Navigator
+    @Inject lateinit var router: Router
 
     lateinit var activityComponent: ActivityComponent
 
