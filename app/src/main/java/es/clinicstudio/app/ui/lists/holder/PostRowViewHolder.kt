@@ -68,6 +68,12 @@ class PostRowViewHolder(view: View, onItemClickedListener: OnItemClickedListener
     @BindColor(R.color.material_gray100_alpha50) @JvmField @ColorInt
     var materialGray100Alpha50Color: Int = 0
 
+    @BindColor(R.color.material_white1000) @JvmField @ColorInt
+    var materialWhiteColor: Int = 0
+
+    @BindColor(R.color.material_gray200) @JvmField @ColorInt
+    var materialGray200Color: Int = 0
+
 
     private var glideRequest: Request? = null
 
@@ -98,6 +104,7 @@ class PostRowViewHolder(view: View, onItemClickedListener: OnItemClickedListener
         // Remove content
         //
         postMainPictureImageView.setImageDrawable(null)
+        postMainPictureImageView.setBackgroundColor(materialWhiteColor)
         postBlurBackgroundImageView.setImageDrawable(null)
         postCategoryTextView.text = null
         postTitleTextView.text = null
@@ -189,6 +196,9 @@ class PostRowViewHolder(view: View, onItemClickedListener: OnItemClickedListener
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(postMainPictureImageView)
                     .request
+        }
+        else {
+            postMainPictureImageView.setBackgroundColor(materialGray200Color)
         }
     }
 

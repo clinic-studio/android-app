@@ -45,10 +45,15 @@ data class ImageUrlResource(
         private fun extractImageSourceSets(htmlContent: String): List<String>? {
             val imageSourceSetRegex = Regex("""<img.*?srcset="(.*?)".*?/>""")
 
-            return imageSourceSetRegex
-                    .findAll(htmlContent)
-                    .map { it.value }
-                    .toList()
+            return if (imageSourceSetRegex.containsMatchIn(htmlContent)) {
+                imageSourceSetRegex
+                        .findAll(htmlContent)
+                        .map { it.value }
+                        .toList()
+            }
+            else {
+                null
+            }
         }
     }
 
