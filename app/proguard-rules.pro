@@ -25,14 +25,42 @@
 # RETROFIT PROGUARD RULES
 #
 
-# Platform calls Class.forName on types which do not exist on Android to determine platform.
--dontnote retrofit2.Platform
-# Platform used when running on Java 8 VMs. Will not be used at runtime.
--dontwarn retrofit2.Platform$Java8
-# Retain generic type information for use by reflection by converters and adapters.
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
 -keepattributes Signature
-# Retain declared checked exceptions for use by a Proxy instance.
 -keepattributes Exceptions
+
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+
+
+#
+# OKIO PROGUARD RULES
+#
+
+-dontwarn okio.**
+
+
+#
+# OKHTTP PROGUARD RULES
+#
+
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+-dontwarn okhttp3.**
+
+
+#
+# JODA TIME PROGUARD RULES
+#
+
+-dontwarn org.joda.convert.**
+-dontwarn org.joda.time.**
+-keep class org.joda.time.** { *; }
+-keep interface org.joda.time.** { *; }
 
 
 #
@@ -45,6 +73,3 @@
   **[] $VALUES;
   public *;
 }
-
-# for DexGuard only
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
