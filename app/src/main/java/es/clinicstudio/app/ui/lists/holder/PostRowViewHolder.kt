@@ -182,7 +182,7 @@ class PostRowViewHolder(view: View, onItemClickedListener: OnItemClickedListener
 
                                         if (height > 0 && width > 0) {
                                             val blurryBitmap = Bitmap.createBitmap(bitmap, 0, bitmap.height - height, width, height)
-                                            materialGray100Alpha50Color?.let { Blurry.with(context).radius(10).sampling(1).color(it).from(blurryBitmap).into(postBlurBackgroundImageView) }
+                                            materialGray100Alpha50Color.let { Blurry.with(context).radius(10).sampling(1).color(it).from(blurryBitmap).into(postBlurBackgroundImageView) }
                                         }
                                     }
 
