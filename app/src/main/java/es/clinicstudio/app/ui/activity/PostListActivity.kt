@@ -1,6 +1,7 @@
 package es.clinicstudio.app.ui.activity
 
 import android.os.Bundle
+import android.view.View
 import es.clinicstudio.app.R
 import es.clinicstudio.app.domain.entity.Post
 import es.clinicstudio.app.ui.lists.adapter.ListAdapter
@@ -43,12 +44,35 @@ class PostListActivity: BaseActivity(), PostListView, RowViewHolder.OnItemClicke
             }
         }
 
-        // Load the list of posts from the blog
-        presenter.loadPostPage()
-
         // Configure action bar
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        // Configure swipe refresh layout
+        swipeRefreshLayout.setOnRefreshListener({ presenter.loadPostPage() })
+        swipeRefreshLayout.setColorSchemeResources(
+                R.color.colorPrimary,
+                R.color.colorPrimaryDark,
+                R.color.colorAccent
+        );
+
+        // Load the list of posts from the blog
+        presenter.loadPostPage()
+    }
+
+    /**
+     * Display the loading layout.
+     */
+    override fun displayLoadingLayout() {
+        progressBar?.visibility = View.VISIBLE
+    }
+
+    /**
+     * Hide the loading layout.
+     */
+    override fun hideLoadingLayout() {
+        swipeRefreshLayout?.isRefreshing = false
+        progressBar?.visibility = View.GONE
     }
 
     /**
@@ -60,10 +84,20 @@ class PostListActivity: BaseActivity(), PostListView, RowViewHolder.OnItemClicke
         postListAdapter?.add(posts)
     }
 
+    /**
+     * Set the total amount of posts available in the blog.
+     *
+     * @param[i] Total page of posts.
+     */
     override fun setTotalPosts(i: Int) {
         postListAdapter?.size = i
     }
 
+    /**
+     * Invoked when a row is clicked.
+     *
+     * @param[item] Content of the row.
+     */
     override fun onItemClicked(item: Post) {
         router.goToPostContentScreen(this, item.title.rendered, item.content.rendered)
     }

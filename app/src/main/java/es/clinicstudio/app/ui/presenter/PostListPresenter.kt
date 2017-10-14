@@ -37,6 +37,8 @@ class PostListPresenter
      */
     fun loadPostPage(page: Int = 1) {
         loading.add(page)
+
+        view?.displayLoadingLayout()
         getPostsUseCase.execute(
                 // Observer
                 object: DefaultObserver<Page<Post>>() {
@@ -45,6 +47,10 @@ class PostListPresenter
 
                         view?.showPosts(next.content)
                         view?.setTotalPosts(next.collectionSize ?: Int.MAX_VALUE)
+
+                        if (loading.isEmpty()) {
+                            view?.hideLoadingLayout()
+                        }
                     }
 
                     override fun onError(e: Throwable) {

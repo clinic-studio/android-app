@@ -41,4 +41,11 @@
         <item name="android:textSize">@dimen/text_small</item>
         <item name="android:textColor">@color/material_gray700</item>
     </style>
+
+    <!-- Control styles -->
+    <style name="AppTheme.WhiteControl" parent="AppTheme">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">@android:color/white</item>
+        <item name="colorControlHighlight">@android:color/white</item>
+    </style>
 </resources>

@@ -8,6 +8,16 @@ import es.clinicstudio.app.domain.entity.Post
 interface PostListView : View {
 
     /**
+     * Display the loading layout.
+     */
+    fun displayLoadingLayout()
+
+    /**
+     * Hide the loading layout.
+     */
+    fun hideLoadingLayout()
+
+    /**
      * Display the list of posts.
      *
      * @param[posts] Lists of posts.
