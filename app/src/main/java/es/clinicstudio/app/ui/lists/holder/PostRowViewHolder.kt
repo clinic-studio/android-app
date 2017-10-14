@@ -202,6 +202,10 @@ class PostRowViewHolder(view: View, onItemClickedListener: OnItemClickedListener
         }
     }
 
+    /**
+     * Display the placeholder views while the content for
+     * this view loads.
+     */
     override fun placeholder() {
         postCategoryPlaceholder.visibility = View.VISIBLE
         postTitlePlaceholder.visibility = View.VISIBLE

@@ -1,6 +1,7 @@
 package es.clinicstudio.app.ui.activity
 
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.view.View
 import es.clinicstudio.app.R
 import es.clinicstudio.app.domain.entity.Post
@@ -11,6 +12,7 @@ import es.clinicstudio.app.ui.presenter.PostListPresenter
 import es.clinicstudio.app.ui.view.PostListView
 import kotlinx.android.synthetic.main.activity_post_list.*
 import javax.inject.Inject
+
 
 /**
  * Post list screen [android.app.Activity].
@@ -48,13 +50,18 @@ class PostListActivity: BaseActivity(), PostListView, RowViewHolder.OnItemClicke
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        // Configure recycler view
+        val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        divider.setDrawable(resources.getDrawable(R.drawable.list_separator))
+        postRecyclerView.addItemDecoration(divider)
+
         // Configure swipe refresh layout
         swipeRefreshLayout.setOnRefreshListener({ presenter.loadPostPage() })
         swipeRefreshLayout.setColorSchemeResources(
                 R.color.colorPrimary,
                 R.color.colorPrimaryDark,
                 R.color.colorAccent
-        );
+        )
 
         // Load the list of posts from the blog
         presenter.loadPostPage()
