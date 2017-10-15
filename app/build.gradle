@@ -2,6 +2,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'io.fabric'
 
 // Configuration
 android {
@@ -124,7 +125,11 @@ dependencies {
     // Blurry
     implementation 'jp.wasabeef:blurry:2.1.1'
 
+    // Glimmer module
     implementation project(':glimmer')
+
+    // Crashlytics
+    compile('com.crashlytics.sdk.android:crashlytics:2.7.0@aar') { transitive = true }
 
 
     // Android test dependencies
