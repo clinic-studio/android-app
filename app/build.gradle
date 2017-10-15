@@ -15,8 +15,8 @@ android {
         targetSdkVersion 26
 
         applicationId 'es.clinicstudio.app'
-        versionCode 2
-        versionName '1.0.1'
+        versionCode 3
+        versionName '1.0.2'
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -33,14 +33,14 @@ android {
             storePassword System.getenv('CLINIC_STUDIO_KSTOREPWD')
 
             keyAlias 'clinicstudio.es'
-            keyPassword System.getenv('KEYPWD')
+            keyPassword System.getenv('CLINIC_STUDIO_KEYPWD')
         }
     }
 
     // Build types configuration
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -66,15 +66,16 @@ android {
             if ('release' == variant.getBuildType().getName()) {
                 variant.outputs.all { outputFileName = "${variant.applicationId}-build_${defaultConfig.versionCode}-${defaultConfig.versionName}-${variant.flavorName}-${variant.buildType.name}.apk" }
 
-                variant.assemble.doLast {
-                    copy {
-                        from variant.mappingFile
-                        into "${rootDir}/buildsystem/mapping"
-                        rename { String fileName ->
-                            "mapping-${variant.applicationId}-build_${defaultConfig.versionCode}-${defaultConfig.versionName}-${variant.flavorName}-${variant.buildType.name}.txt"
-                        }
-                    }
-                }
+                // TODO: Uncomment after enabling the code minifying
+                // variant.assemble.doLast {
+                //     copy {
+                //         from variant.mappingFile
+                //         into "${rootDir}/buildsystem/mapping"
+                //         rename { String fileName ->
+                //             "mapping-${variant.applicationId}-build_${defaultConfig.versionCode}-${defaultConfig.versionName}-${variant.flavorName}-${variant.buildType.name}.txt"
+                //         }
+                //     }
+                // }
             }
     }
 
