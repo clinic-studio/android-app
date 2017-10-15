@@ -1,8 +1,12 @@
+// Plugins
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'io.fabric'
 
+// Configuration
 android {
+    // Default configuration
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
 
@@ -10,9 +14,9 @@ android {
         minSdkVersion 16
         targetSdkVersion 26
 
-        applicationId "es.clinicstudio.app"
-        versionCode 1
-        versionName "1.0.0"
+        applicationId 'es.clinicstudio.app'
+        versionCode 2
+        versionName '1.0.1'
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -22,18 +26,65 @@ android {
         buildConfigField 'String', 'TOTAL_RECORDS_HEADER', '"X-WP-Total"'
     }
 
+    // APK signing configuration
+    signingConfigs {
+        release {
+            storeFile file('../buildsystem/keystore/upload-keystore.jks')
+            storePassword System.getenv('CLINIC_STUDIO_KSTOREPWD')
+
+            keyAlias 'clinicstudio.es'
+            keyPassword System.getenv('KEYPWD')
+        }
+    }
+
+    // Build types configuration
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            applicationIdSuffix ".dev"
+            debuggable true
+        }
     }
 
+    // Flavors configuration
+    flavorDimensions 'mode'
+
+    productFlavors {
+        production {
+            dimension 'mode'
+
+            //noinspection GroovyAssignabilityCheck
+            signingConfig signingConfigs.release
+        }
+    }
+
+    applicationVariants.all {
+        variant ->
+            if ('release' == variant.getBuildType().getName()) {
+                variant.outputs.all { outputFileName = "${variant.applicationId}-build_${defaultConfig.versionCode}-${defaultConfig.versionName}-${variant.flavorName}-${variant.buildType.name}.apk" }
+
+                variant.assemble.doLast {
+                    copy {
+                        from variant.mappingFile
+                        into "${rootDir}/buildsystem/mapping"
+                        rename { String fileName ->
+                            "mapping-${variant.applicationId}-build_${defaultConfig.versionCode}-${defaultConfig.versionName}-${variant.flavorName}-${variant.buildType.name}.txt"
+                        }
+                    }
+                }
+            }
+    }
+
+    // Annotation processors configuration
     kapt {
         generateStubs = true
     }
 }
 
+// Module dependencies
 dependencies {
     // Annotation processors
     kapt 'com.google.dagger:dagger-compiler:2.11'
@@ -74,7 +125,11 @@ dependencies {
     // Blurry
     implementation 'jp.wasabeef:blurry:2.1.1'
 
+    // Glimmer module
     implementation project(':glimmer')
+
+    // Crashlytics
+    compile('com.crashlytics.sdk.android:crashlytics:2.7.0@aar') { transitive = true }
 
 
     // Android test dependencies
@@ -86,3 +141,6 @@ dependencies {
     // Unit test dependencies
     testImplementation 'junit:junit:4.12'
 }
+
+// More plugins (these ones NEED to be at the bottom)
+apply plugin: 'com.google.gms.google-services'
