@@ -48,5 +48,11 @@
             android:name="es.clinicstudio.app.ui.activity.PostContentActivity"
         />
 
+
+        <!-- Crashlytics configuration -->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="ed821acdd8451beccc3449438e54032b524e3a22"
+        />
     </application>
 </manifest>

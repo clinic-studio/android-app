@@ -1,0 +1,113 @@
+{
+  "project_info": {
+    "project_number": "218430187057",
+    "firebase_url": "https://clinic-studio.firebaseio.com",
+    "project_id": "clinic-studio",
+    "storage_bucket": "clinic-studio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218430187057:android:295cfc95a97b4c1e",
+        "android_client_info": {
+          "package_name": "es.clinicstudio.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "218430187057-457gqoo9o89pn9gkmaqhs7p8ebrgv243.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "es.clinicstudio.app",
+            "certificate_hash": "4326c762b5d8251893392892ff165a2ba6970693"
+          }
+        },
+        {
+          "client_id": "218430187057-3tcs85usqkspvi7nppjsvdqn097looj3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdnzcr960TdmgoUIG-mWZqndEAWwg2LEM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "218430187057-gb2v60kpjjiaolkgrvngcv1rhq8gmd0s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "es.clinicstudio.app.dev"
+              }
+            },
+            {
+              "client_id": "218430187057-3tcs85usqkspvi7nppjsvdqn097looj3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218430187057:android:a2a33e779194b7b1",
+        "android_client_info": {
+          "package_name": "es.clinicstudio.app.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "218430187057-v32b5cpuno3lob1h2nu16g2suabh0e8s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "es.clinicstudio.app.dev",
+            "certificate_hash": "3b5c514132adf29c95d21cce42ea565311d0943d"
+          }
+        },
+        {
+          "client_id": "218430187057-3tcs85usqkspvi7nppjsvdqn097looj3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdnzcr960TdmgoUIG-mWZqndEAWwg2LEM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "218430187057-gb2v60kpjjiaolkgrvngcv1rhq8gmd0s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "es.clinicstudio.app.dev"
+              }
+            },
+            {
+              "client_id": "218430187057-3tcs85usqkspvi7nppjsvdqn097looj3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
