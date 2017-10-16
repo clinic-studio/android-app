@@ -22,9 +22,29 @@
 
 
 #
+# ALL OBJECTS THAT MIGHT BE SERIALIZED OR DESERIALIZED MUST NOT
+# BE MINIFYED IN ORDER TO PRESERVE THE ATTRIBUTE ORIGINAL NAMES
+#
+-keep class es.clinicstudio.app.domain.entity.** { *; }
+
+
+#
+# REMOVE ALL LOGS
+#
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static int v(...);
+    public static int d(...);
+    public static int i(...);
+    public static int w(...);
+    public static int e(...);
+    public static int a(...);
+}
+
+
+#
 # RETROFIT PROGUARD RULES
 #
-
 -dontwarn retrofit2.**
 -keep class retrofit2.** { *; }
 -keepattributes Signature
@@ -38,14 +58,12 @@
 #
 # OKIO PROGUARD RULES
 #
-
 -dontwarn okio.**
 
 
 #
 # OKHTTP PROGUARD RULES
 #
-
 -keepattributes Signature
 -keepattributes *Annotation*
 -keep class okhttp3.** { *; }
@@ -56,7 +74,6 @@
 #
 # JODA TIME PROGUARD RULES
 #
-
 -dontwarn org.joda.convert.**
 -dontwarn org.joda.time.**
 -keep class org.joda.time.** { *; }
@@ -66,7 +83,6 @@
 #
 # GLIDE PROGUARD RULES
 #
-
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public class * extends com.bumptech.glide.module.AppGlideModule
 -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {

@@ -40,7 +40,7 @@ android {
     // Build types configuration
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -66,16 +66,15 @@ android {
             if ('release' == variant.getBuildType().getName()) {
                 variant.outputs.all { outputFileName = "${variant.applicationId}-build_${defaultConfig.versionCode}-${defaultConfig.versionName}-${variant.flavorName}-${variant.buildType.name}.apk" }
 
-                // TODO: Uncomment after enabling the code minifying
-                // variant.assemble.doLast {
-                //     copy {
-                //         from variant.mappingFile
-                //         into "${rootDir}/buildsystem/mapping"
-                //         rename { String fileName ->
-                //             "mapping-${variant.applicationId}-build_${defaultConfig.versionCode}-${defaultConfig.versionName}-${variant.flavorName}-${variant.buildType.name}.txt"
-                //         }
-                //     }
-                // }
+                variant.assemble.doLast {
+                    copy {
+                        from variant.mappingFile
+                        into "${rootDir}/buildsystem/mapping"
+                        rename { String fileName ->
+                            "mapping-${variant.applicationId}-build_${defaultConfig.versionCode}-${defaultConfig.versionName}-${variant.flavorName}-${variant.buildType.name}.txt"
+                        }
+                    }
+                }
             }
     }
 
