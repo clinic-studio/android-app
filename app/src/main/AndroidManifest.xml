@@ -43,12 +43,6 @@
             android:theme="@style/AppTheme.HomeScreen"
         />
 
-        <!-- Post list activity -->
-        <activity
-            android:name="es.clinicstudio.app.ui.activity.PostListActivity"
-            android:theme="@style/AppTheme.HomeScreen"
-        />
-
         <!-- Post content activity -->
         <activity
             android:name="es.clinicstudio.app.ui.activity.PostContentActivity"

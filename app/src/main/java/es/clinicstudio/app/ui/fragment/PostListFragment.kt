@@ -1,39 +1,48 @@
-package es.clinicstudio.app.ui.activity
+package es.clinicstudio.app.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
+import android.view.LayoutInflater
 import android.view.View
-import dagger.android.AndroidInjection
+import android.view.ViewGroup
+import dagger.android.support.AndroidSupportInjection
 import es.clinicstudio.app.R
 import es.clinicstudio.app.domain.entity.Post
+import es.clinicstudio.app.ui.activity.BaseActivity
 import es.clinicstudio.app.ui.lists.adapter.ListAdapter
 import es.clinicstudio.app.ui.lists.adapter.PostListAdapter
 import es.clinicstudio.app.ui.lists.holder.RowViewHolder
 import es.clinicstudio.app.ui.presenter.PostListPresenter
+import es.clinicstudio.app.ui.utils.Router
 import es.clinicstudio.app.ui.view.PostListView
-import kotlinx.android.synthetic.main.activity_post_list.*
+import kotlinx.android.synthetic.main.fragment_post_list.*
 import javax.inject.Inject
 
-
 /**
- * Post list screen [android.app.Activity].
- *
  * @author vh @ recursividad.es
  */
-class PostListActivity: BaseActivity(), PostListView, RowViewHolder.OnItemClickedListener<Post> {
+class PostListFragment: Fragment(), PostListView, RowViewHolder.OnItemClickedListener<Post> {
 
-    @Inject
-    lateinit var presenter: PostListPresenter
+    @Inject lateinit var presenter: PostListPresenter
+    @Inject lateinit var router: Router
 
     private var postListAdapter: PostListAdapter? = null
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_post_list)
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
 
         // Inject dependencies
-        AndroidInjection.inject(this)
+        AndroidSupportInjection.inject(this)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater?.inflate(R.layout.fragment_post_list, container, false)
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Initialize the presenter
         presenter.setView(this)
@@ -47,12 +56,8 @@ class PostListActivity: BaseActivity(), PostListView, RowViewHolder.OnItemClicke
             }
         }
 
-        // Configure action bar
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-
         // Configure recycler view
-        val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         divider.setDrawable(resources.getDrawable(R.drawable.list_separator))
         postRecyclerView.addItemDecoration(divider)
 
@@ -72,7 +77,7 @@ class PostListActivity: BaseActivity(), PostListView, RowViewHolder.OnItemClicke
      * Display the loading layout.
      */
     override fun displayLoadingLayout() {
-        progressBar?.visibility = View.VISIBLE
+        //progressBar?.visibility = View.VISIBLE
     }
 
     /**
@@ -80,7 +85,7 @@ class PostListActivity: BaseActivity(), PostListView, RowViewHolder.OnItemClicke
      */
     override fun hideLoadingLayout() {
         swipeRefreshLayout?.isRefreshing = false
-        progressBar?.visibility = View.GONE
+        //progressBar?.visibility = View.GONE
     }
 
     /**
@@ -107,6 +112,6 @@ class PostListActivity: BaseActivity(), PostListView, RowViewHolder.OnItemClicke
      * @param[item] Content of the row.
      */
     override fun onItemClicked(item: Post) {
-        router.goToPostContentScreen(this, item.title.rendered, item.content.rendered)
+        router.goToPostContentScreen(activity as BaseActivity, item.title.rendered, item.content.rendered)
     }
 }

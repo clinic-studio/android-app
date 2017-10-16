@@ -5,7 +5,6 @@ import android.content.Intent
 import es.clinicstudio.app.ui.activity.BaseActivity
 import es.clinicstudio.app.ui.activity.HomeActivity
 import es.clinicstudio.app.ui.activity.PostContentActivity
-import es.clinicstudio.app.ui.activity.PostListActivity
 
 /**
  * Helper class for handling navigation through application activities.
@@ -20,16 +19,7 @@ class Router(private val context: Context) {
      * @param[activity] Current activity from which navigate
      */
     fun goToHomeScreen(activity: BaseActivity) {
-        activity.startActivity(HomeActivity.intent(context))
-    }
-
-    /**
-     * Navigate to the post list screen.
-     *
-     * @param[activity] Current activity from which navigate
-     */
-    fun goToPostListScreen(activity: BaseActivity) {
-        val intent = Intent(context, PostListActivity::class.java)
+        val intent = HomeActivity.intent(context)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
 
         activity.startActivity(intent)
