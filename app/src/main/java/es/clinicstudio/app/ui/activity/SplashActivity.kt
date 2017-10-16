@@ -10,7 +10,7 @@ class SplashActivity: BaseActivity() {
     override fun onStart() {
         super.onStart()
 
-        // Navigate to the post list
-        router.goToPostListScreen(this)
+        // Navigate to the home screen
+        router.goToHomeScreen(this)
     }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tab_feed"
+        android:icon="@android:drawable/ic_lock_lock"
+        android:title="Índice"
+    />
+
+    <item
+        android:id="@+id/tab_categories"
+        android:icon="@android:drawable/ic_lock_lock"
+        android:title="Categorías"
+    />
+
+    <item
+        android:id="@+id/tab_info"
+        android:icon="@android:drawable/ic_lock_lock"
+        android:title="Información"
+    />
+</menu>

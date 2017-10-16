@@ -3,6 +3,7 @@ package es.clinicstudio.app.ui.utils
 import android.content.Context
 import android.content.Intent
 import es.clinicstudio.app.ui.activity.BaseActivity
+import es.clinicstudio.app.ui.activity.HomeActivity
 import es.clinicstudio.app.ui.activity.PostContentActivity
 import es.clinicstudio.app.ui.activity.PostListActivity
 
@@ -12,6 +13,15 @@ import es.clinicstudio.app.ui.activity.PostListActivity
  * @author vh @ recursividad.es
  */
 class Router(private val context: Context) {
+
+    /**
+     * Navigate to the home screen.
+     *
+     * @param[activity] Current activity from which navigate
+     */
+    fun goToHomeScreen(activity: BaseActivity) {
+        activity.startActivity(HomeActivity.intent(context))
+    }
 
     /**
      * Navigate to the post list screen.

@@ -37,10 +37,16 @@
             </intent-filter>
         </activity>
 
+        <!-- Home activity -->
+        <activity
+            android:name="es.clinicstudio.app.ui.activity.HomeActivity"
+            android:theme="@style/AppTheme.HomeScreen"
+        />
+
         <!-- Post list activity -->
         <activity
             android:name="es.clinicstudio.app.ui.activity.PostListActivity"
-            android:theme="@style/AppTheme.MainScreen"
+            android:theme="@style/AppTheme.HomeScreen"
         />
 
         <!-- Post content activity -->
