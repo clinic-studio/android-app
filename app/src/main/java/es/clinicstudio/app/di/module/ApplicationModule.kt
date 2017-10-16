@@ -15,7 +15,7 @@ import javax.inject.Singleton
  * @author vh @ recursividad.es
  */
 @Module
-class ApplicationModule(private val app: App) {
+class ApplicationModule {
 
     /**
      * Provides the application [Context].
@@ -23,7 +23,7 @@ class ApplicationModule(private val app: App) {
      * @return Application context.
      */
     @Provides @Singleton
-    fun provideApplicationContext(): Context {
+    fun provideApplicationContext(app: App): Context {
         return app.applicationContext
     }
 
@@ -33,7 +33,7 @@ class ApplicationModule(private val app: App) {
      * @return Connectivity manager.
      */
     @Provides @Singleton
-    fun provideConnectivityManager(): ConnectivityManager {
+    fun provideConnectivityManager(app: App): ConnectivityManager {
         return app.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
 
@@ -44,7 +44,7 @@ class ApplicationModule(private val app: App) {
      * @return Application router.
      */
     @Provides @Singleton
-    fun provideNavigator(context: Context): Router {
+    fun provideRouter(context: Context): Router {
         return Router(context)
     }
 }

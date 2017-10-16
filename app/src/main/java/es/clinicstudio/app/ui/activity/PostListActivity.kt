@@ -3,6 +3,7 @@ package es.clinicstudio.app.ui.activity
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.view.View
+import dagger.android.AndroidInjection
 import es.clinicstudio.app.R
 import es.clinicstudio.app.domain.entity.Post
 import es.clinicstudio.app.ui.lists.adapter.ListAdapter
@@ -32,7 +33,7 @@ class PostListActivity: BaseActivity(), PostListView, RowViewHolder.OnItemClicke
         setContentView(R.layout.activity_post_list)
 
         // Inject dependencies
-        activityComponent.inject(this)
+        AndroidInjection.inject(this)
 
         // Initialize the presenter
         presenter.setView(this)

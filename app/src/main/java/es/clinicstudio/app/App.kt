@@ -1,18 +1,22 @@
 package es.clinicstudio.app
 
+import android.app.Activity
 import android.app.Application
-import es.clinicstudio.app.di.ApplicationComponent
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
 import es.clinicstudio.app.di.DaggerApplicationComponent
-import es.clinicstudio.app.di.module.ApplicationModule
+import javax.inject.Inject
 
 /**
  * Clinic Studio [Application] for Android.
  *
  * @author vh @ recursividad.es
  */
-class App: Application() {
+class App: Application(), HasActivityInjector {
 
-    lateinit var applicationComponent: ApplicationComponent
+    @Inject
+    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
 
     override fun onCreate() {
         super.onCreate()
@@ -20,8 +24,14 @@ class App: Application() {
     }
 
     private fun initializeInjector() {
-       applicationComponent = DaggerApplicationComponent.builder()
-               .applicationModule(ApplicationModule(this))
-               .build()
+        DaggerApplicationComponent
+                .builder()
+                .application(this)
+                .build()
+                .inject(this)
+    }
+
+    override fun activityInjector(): AndroidInjector<Activity> {
+        return activityInjector
     }
 }
