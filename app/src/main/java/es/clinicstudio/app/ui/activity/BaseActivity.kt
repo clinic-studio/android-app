@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.crashlytics.android.Crashlytics
+import com.google.firebase.analytics.FirebaseAnalytics
 import es.clinicstudio.app.App
 import es.clinicstudio.app.di.ActivityComponent
 import es.clinicstudio.app.di.DaggerActivityComponent
@@ -39,5 +40,8 @@ open class BaseActivity: AppCompatActivity() {
 
         // Initialize Crashlytics
         Fabric.with(this, Crashlytics())
+
+        // Initialize Firebase Analytics
+        FirebaseAnalytics.getInstance(this)
     }
 }

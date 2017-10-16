@@ -102,6 +102,9 @@ dependencies {
     // Kotlin dependencies
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
+    // Firebase dependencies
+    implementation 'com.google.firebase:firebase-core:11.4.2'
+
     // Dagger
     implementation 'com.google.dagger:dagger:2.11'
 
@@ -129,7 +132,7 @@ dependencies {
     implementation project(':glimmer')
 
     // Crashlytics
-    compile('com.crashlytics.sdk.android:crashlytics:2.7.0@aar') { transitive = true }
+    implementation('com.crashlytics.sdk.android:crashlytics:2.7.0@aar') { transitive = true }
 
 
     // Android test dependencies
