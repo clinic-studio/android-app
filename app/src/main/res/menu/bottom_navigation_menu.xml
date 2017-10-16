@@ -3,19 +3,19 @@
 
     <item
         android:id="@+id/tab_feed"
-        android:icon="@android:drawable/ic_lock_lock"
-        android:title="Índice"
+        android:icon="@drawable/ic_list"
+        android:title="@string/menu_index"
     />
 
     <item
         android:id="@+id/tab_categories"
-        android:icon="@android:drawable/ic_lock_lock"
-        android:title="Categorías"
+        android:icon="@drawable/ic_categories"
+        android:title="@string/menu_categories"
     />
 
     <item
         android:id="@+id/tab_info"
-        android:icon="@android:drawable/ic_lock_lock"
-        android:title="Información"
+        android:icon="@drawable/ic_info"
+        android:title="@string/menu_info"
     />
 </menu>

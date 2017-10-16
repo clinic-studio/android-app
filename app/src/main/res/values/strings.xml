@@ -13,6 +13,11 @@
     <string name="yesterday">ayer</string>
     <string name="on_date">%1$s</string>
 
+    <!-- Menu strings -->
+    <string name="menu_index">Índice</string>
+    <string name="menu_categories">Categorías</string>
+    <string name="menu_info">Información</string>
+
 
     <!-- Plurals -->
     <plurals name="plurals_x_minutes_ago">
