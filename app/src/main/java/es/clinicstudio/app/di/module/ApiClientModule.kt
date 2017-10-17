@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import es.clinicstudio.app.BuildConfig
 import es.clinicstudio.app.data.api.PostApiClient
+import es.clinicstudio.app.data.api.serialization.CategoryApiClient
 import es.clinicstudio.app.data.api.serialization.GsonDateTimeAdapter
 import org.joda.time.DateTime
 import retrofit2.Retrofit
@@ -47,5 +48,13 @@ class ApiClientModule {
     @Provides @Singleton
     fun providePostApiClient(retrofit: Retrofit): PostApiClient {
         return retrofit.create(PostApiClient::class.java)
+    }
+
+    /**
+     * Provides a [CategoryApiClient] for retrieving Categories from the API.
+     */
+    @Provides @Singleton
+    fun provideCategoryApiClient(retrofit: Retrofit): CategoryApiClient {
+        return retrofit.create(CategoryApiClient::class.java)
     }
 }
