@@ -141,8 +141,8 @@ abstract class Repository(
         val response = call(call)
         if (response.isSuccessful) {
             val content = response.body()
-            val page = call.request().url().queryParameter("page")!!.toInt()
-            val capacity = call.request().url().queryParameter("per_page")!!.toInt()
+            val page = call.request().url().queryParameter("page")?.toInt() ?: 0
+            val capacity = call.request().url().queryParameter("per_page")?.toInt() ?: 10
             val totalPages = response.headers()?.get(BuildConfig.TOTAL_PAGES_HEADER)?.toInt()
             val totalSize = response.headers()?.get(BuildConfig.TOTAL_RECORDS_HEADER)?.toInt()
 
