@@ -11,7 +11,10 @@ import javax.inject.Inject
  *
  * @author vh @ recursividad.es
  */
-class GetPostsUseCase @Inject constructor(private val postRepository: PostRepository): UseCase<Page<Post>, GetPostsUseCase.Params>() {
+class GetPostsUseCase @Inject constructor(
+        private val postRepository: PostRepository)
+    :
+        UseCase<Page<Post>, GetPostsUseCase.Params>() {
 
     data class Params(
             val page: Int = 1,
